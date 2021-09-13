@@ -1,0 +1,30 @@
+<nz-select
+  style="position: absolute; left: 500px; top: 200px;"
+  (ngModelChange)="vendorChange($event)"
+  [(ngModel)]="vendorChooseValue"
+  nzPlaceHolder="vendor"
+  [compareWith]="compareFn">
+  <nz-option *ngFor="let vendor of vendorValueList" [nzValue]="vendor" [nzLabel]="vendor.label"></nz-option>
+</nz-select>
+
+<nz-radio-group style="position: absolute; left: 500px; top: 250px;" (ngModelChange)="technologyChange($event)" [(ngModel)]="technologyValue" nzButtonStyle="solid">
+  <label *ngFor="let technology of technologyList" nz-radio-button [nzDisabled]="technology.disabledState" [nzValue]="technology.value">{{technology.value}}</label>
+</nz-radio-group>
+
+<nz-transfer style="position: absolute; left: 500px; top: 300px;"
+      [nzDataSource]="nzTransferListToShow"
+      [nzDisabled]="disabled"
+      [nzTitles]="['Kpi List', 'Kpi To View']"
+      (nzSelectChange)="select($event)"
+      [nzSelectedKeys]="['0', '2']"
+      (nzChange)="change($event)"
+    ></nz-transfer>
+    <div style="margin-top: 8px;">
+      <nz-switch [(ngModel)]="disabled" nzCheckedChildren="disabled" nzUnCheckedChildren="disabled"></nz-switch>
+      <div></div>
+    </div>
+    <nz-card style="width:300px; position: absolute; left: 930px; top: 285px;" nzTitle="Card title">
+      <p *ngFor="let formula of formulaToShow">{{formula}}</p>
+    </nz-card>
+    <button style="position: absolute; left: 1146px; top: 520px;" (click)="exportFile()">Export CSV</button>
+<button style="position: absolute; right: 10px; top: 10px;" (click)="logout()"> Logout </button>
