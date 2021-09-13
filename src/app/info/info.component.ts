@@ -76,13 +76,13 @@ export class InfoComponent implements OnInit {
   }
 
   vendorChange(data: any): void{
+    this.vendorModelToExport = new ExportModel();
+    this.nzTransferListToShow = [];
+    this.formulaToShow = [];
+    this.technologyValue = new Technology();
     this.vendorChooseValue = data;
     switch (data){
       case this.vendorValueList[0] : {
-        this.vendorModelToExport = new ExportModel();
-        this.nzTransferListToShow = [];
-        this.formulaToShow = [];
-        this.technologyValue = new Technology();
         this.vendorChooseFromList = this.vendorList[0];
         this.technologyList[2].disabledState = true;
         this.technologyList[3].disabledState = true;
@@ -90,10 +90,6 @@ export class InfoComponent implements OnInit {
         break;
       }
       case this.vendorValueList[1] : {
-        this.vendorModelToExport = new ExportModel();
-        this.nzTransferListToShow = [];
-        this.formulaToShow = [];
-        this.technologyValue = new Technology();
         this.vendorChooseFromList = this.vendorList[1];
         this.technologyList[2].disabledState = false;
         this.technologyList[3].disabledState = true;
@@ -101,10 +97,6 @@ export class InfoComponent implements OnInit {
         break;
       }
       case this.vendorValueList[2] : {
-        this.vendorModelToExport = new ExportModel();
-        this.nzTransferListToShow = [];
-        this.formulaToShow = [];
-        this.technologyValue = new Technology();
         this.vendorChooseFromList = this.vendorList[2];
         this.technologyList[2].disabledState = false;
         this.technologyList[3].disabledState = false;
@@ -115,13 +107,13 @@ export class InfoComponent implements OnInit {
   }
 
   technologyChange(data: any): void{
+    this.vendorModelToExport.formulas = [];
+    this.vendorModelToExport.kpiToView = [];
+    this.nzTransferListToShow = [];
+    this.formulaToShow = [];
     switch (data){
       case this.technologyList[0].value: {
-        this.vendorModelToExport.formulas = [];
-        this.vendorModelToExport.kpiToView = [];
-        this.nzTransferListToShow = [];
         this.vendorModelToExport.technology = this.technologyList[0].value;
-        this.formulaToShow = [];
         this.vendorChooseFromList.kpiAll.forEach((value: any) => {
           value.direction = 'left';
           this.nzTransferListToShow.push(value);
@@ -129,31 +121,20 @@ export class InfoComponent implements OnInit {
         break;
       }
       case this.technologyList[1].value: {
-        this.vendorModelToExport.formulas = [];
-        this.vendorModelToExport.kpiToView = [];
-        this.nzTransferListToShow = [];
         this.vendorModelToExport.technology = this.technologyList[1].value;
-        this.formulaToShow = [];
         this.vendorChooseFromList.kpiValue[0].direction = 'left';
         this.nzTransferListToShow.push(this.vendorChooseFromList.kpiValue[0]);
         break;
       }
       case this.technologyList[2].value: {
-        this.vendorModelToExport.formulas = [];
-        this.vendorModelToExport.kpiToView = [];
-        this.nzTransferListToShow = [];
         this.vendorModelToExport.technology = this.technologyList[2].value;
-        this.formulaToShow = [];
         this.vendorChooseFromList.kpiValue[1].direction = 'left';
         this.nzTransferListToShow.push(this.vendorChooseFromList.kpiValue[1]);
         break;
       }
       case this.technologyList[3].value: {
-        this.vendorModelToExport.formulas = [];
-        this.vendorModelToExport.kpiToView = [];
-        this.nzTransferListToShow = [];
+
         this.vendorModelToExport.technology = this.technologyList[3].value;
-        this.formulaToShow = [];
         this.vendorChooseFromList.kpiValue[2].direction = 'left';
         this.nzTransferListToShow.push(this.vendorChooseFromList.kpiValue[2]);
         break;
@@ -176,45 +157,40 @@ export class InfoComponent implements OnInit {
   change(ret: any): void {
     ret.list.forEach((data: any) => {
       if (ret.to === 'right') {
+        this.vendorModelToExport.kpiToView.push(data.title);
         switch (data.key) {
           case '0': {
             this.formulaToShow.push(this.formulaList[0]);
-            this.vendorModelToExport.kpiToView.push(data.title);
             this.vendorModelToExport.formulas.push(this.formulaList[0]);
             break;
           }
           case '1' : {
             this.formulaToShow.push(this.formulaList[1]);
-            this.vendorModelToExport.kpiToView.push(data.title);
             this.vendorModelToExport.formulas.push(this.formulaList[1]);
             break;
           }
           case '2' : {
             this.formulaToShow.push(this.formulaList[2]);
-            this.vendorModelToExport.kpiToView.push(data.title);
             this.vendorModelToExport.formulas.push(this.formulaList[2]);
             break;
           }
         }
-        console.log(this.vendorModelToExport);
       }
       else if (data.direction === 'left'){
+        this.vendorModelToExport.kpiToView.splice(this.vendorModelToExport.kpiToView.findIndex(a => a === data.title), 1);
         switch (data.key) {
           case '0': {
             this.formulaToShow.splice(this.formulaToShow.findIndex(a => a === this.formulaList[0]), 1);
-            this.vendorModelToExport.kpiToView.splice(this.vendorModelToExport.kpiToView.findIndex(a => a === data.title), 1);
             this.vendorModelToExport.formulas.splice(this.vendorModelToExport.formulas.findIndex(a => a === this.formulaList[0]), 1);
             break;
           }
           case '1' : {
             this.formulaToShow.splice(this.formulaToShow.findIndex(a => a === this.formulaList[1]), 1);
-            this.vendorModelToExport.kpiToView.splice(this.vendorModelToExport.kpiToView.findIndex(a => a === data.title), 1);
             this.vendorModelToExport.formulas.splice(this.vendorModelToExport.formulas.findIndex(a => a === this.formulaList[1]), 1);
             break;
           }
           case '2' : {
             this.formulaToShow.splice(this.formulaToShow.findIndex(a => a === this.formulaList[2]), 1);
-            this.vendorModelToExport.kpiToView.splice(this.vendorModelToExport.kpiToView.findIndex(a => a === data.title), 1);
             this.vendorModelToExport.formulas.splice(this.vendorModelToExport.formulas.findIndex(a => a === this.formulaList[2]), 1);
             break;
           }
